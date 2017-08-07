@@ -1,7 +1,13 @@
 "use strict";
 define(function(){
 
-	var Todo = function(){
+	var todo;
+
+	var Todo = function(/*bool*/oneInstance){
+		if (todo instanceof Todo && oneInstance === true){
+			return todo;
+		}
+
 		this.schedule = {};
 	};
 
@@ -49,7 +55,7 @@ define(function(){
 		},
 	};
 
-	var todo = new Todo;
+	todo = new Todo(true);
 	return todo;
 
 });

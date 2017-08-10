@@ -13,6 +13,18 @@ define(function(){
 
 	Todo.prototype = {
 		constr : Todo,
+		minutes : function(value){
+			return value * 60 * 1000;
+		},
+		seconds : function(value){
+			return value * 1000;
+		},
+		hours : function(value){
+			return value 60 * 60 * 1000;
+		},
+		days : function(value){
+			return value 24 * 60 * 60 * 1000;
+		},
 		add : function(/*str*/name, /*str*/date, /*func*/callback, /*obj || undef*/context){
 			var _this = this;
 			var timeout = +new Date(date) - +new Date();

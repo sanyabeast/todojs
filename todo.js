@@ -20,10 +20,10 @@ define(function(){
 			return value * 1000;
 		},
 		hours : function(value){
-			return value 60 * 60 * 1000;
+			return value * 60 * 60 * 1000;
 		},
 		days : function(value){
-			return value 24 * 60 * 60 * 1000;
+			return value * 24 * 60 * 60 * 1000;
 		},
 		add : function(/*str*/name, /*str*/date, /*func*/callback, /*obj || undef*/context){
 			var _this = this;

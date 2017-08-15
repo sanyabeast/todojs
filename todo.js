@@ -13,6 +13,11 @@ define(function(){
 
 	Todo.prototype = {
 		constr : Todo,
+		nextTime : function(divider, now){
+			now = now || +new Date();
+			return Math.ceil((now + 1) / divider) * divider;
+
+		},
 		minutes : function(value){
 			return value * 60 * 1000;
 		},

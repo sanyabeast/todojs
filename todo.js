@@ -13,8 +13,16 @@ define(function(){
 
 	Todo.prototype = {
 		constr : Todo,
+		timeGetter : null,
+		now : function(){
+			if (this.timeGetter){
+				return this.timeGetter();
+			} else {
+				return +new Date();
+			}
+		},
 		nextTime : function(divider, now){
-			now = now || +new Date();
+			now = now || this.now();
 			return Math.ceil((now + 1) / divider) * divider;
 
 		},
@@ -32,12 +40,12 @@ define(function(){
 		},
 		add : function(/*str*/name, /*str*/date, /*func*/callback, /*obj || undef*/options){
 			var _this = this;
-			var timeout = +new Date(date) - +new Date();
+			var timeout = +new Date(date) - this.now();
 
 			if (timeout < 0){
 				console.warn("Todo: todo date have to be bigger than current date");
 			} else {
-				this.schedule[name] = new this.Task(name, date, callback, options || {}, function(){
+				this.schedule[name] = new this.Task(this, name, date, callback, options || {}, function(){
 					delete _this.schedule[name];
 				});
 			}
@@ -56,7 +64,8 @@ define(function(){
 			return this;
 
 		},
-		Task : function(/*str*/name, /*str || num*/date, /*func*/callback, /*obj*/options, /*func*/onExpire){
+		Task : function(/*obj*/todo, /*str*/name, /*str || num*/date, /*func*/callback, /*obj*/options, /*func*/onExpire){
+			this.todo = todo;
 			this.onExpire = onExpire;
 			this.name = name;
 			this.date = date;
@@ -64,7 +73,7 @@ define(function(){
 			this.options = options;
 			this.repeatCount = 0;
 
-			var timeout = +new Date(this.date) - (+new Date());
+			var timeout = +new Date(this.date) - (todo.now());
 
 			this.invoke = this.invoke.bind(this);
 

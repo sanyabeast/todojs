@@ -53,6 +53,14 @@ define(function(){
 			return this;
 
 		},
+		update : function(name, date, callback, options){
+			if (this.schedule[name]){
+				clearTimeout( this.schedule[name].timeoutID);
+				delete this.schedule[name];
+			}
+			
+			this.add(name, date, callback, options);
+		},
 		remove : function(/*str*/name){
 			if (!this.schedule[name]){
 				console.warn("Todo: item to remove cannot be found in schedule");

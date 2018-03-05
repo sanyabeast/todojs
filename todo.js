@@ -21,6 +21,9 @@ define(function(){
 				return +new Date();
 			}
 		},
+		in : function(value){
+			return Date.now() + value;
+		},
 		nextTime : function(divider, now){
 			now = now || this.now();
 			return Math.ceil((now + 1) / divider) * divider;

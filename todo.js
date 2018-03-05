@@ -12,6 +12,9 @@ define(function(){
 	};
 
 	Todo.prototype = {
+		onTaskAdded : null,
+		onTaskRemoved : null,
+		onTaskUpdated : null,
 		constr : Todo,
 		timeGetter : null,
 		now : function(){
@@ -53,6 +56,10 @@ define(function(){
 				});
 			}
 
+			if (typeof this.onTaskAdded == "function"){
+				this.onTaskAdded(this, name, data, callback, options);
+			}
+
 			return this;
 
 		},
@@ -63,6 +70,10 @@ define(function(){
 			}
 			
 			this.add(name, date, callback, options);
+
+			if (typeof this.onTaskUpdated == "function"){
+				this.onTaskUpdated(this, name, data, callback, options);
+			}
 		},
 		remove : function(/*str*/name){
 			if (!this.schedule[name]){
@@ -70,6 +81,10 @@ define(function(){
 			} else {
 				clearTimeout(this.schedule[name].timeoutID);
 				delete this.schedule[name];
+			}
+
+			if (typeof this.onTaskRemoved == "function"){
+				this.onTaskRemoved(this, name);
 			}
 
 			return this;

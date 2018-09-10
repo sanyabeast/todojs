@@ -49,7 +49,7 @@ define(function(){
 			var timeout = +new Date(date) - this.now();
 
 			if (timeout < 0){
-				console.warn("Todo: todo date have to be bigger than current date");
+				// console.warn("Todo: todo date have to be bigger than current date");
 			} else {
 				this.schedule[name] = new this.Task(this, name, date, callback, options || {}, function(){
 					delete _this.schedule[name];
@@ -77,7 +77,7 @@ define(function(){
 		},
 		remove : function(/*str*/name){
 			if (!this.schedule[name]){
-				console.warn("Todo: item to remove cannot be found in schedule");
+				// console.warn("Todo: item to remove cannot be found in schedule");
 			} else {
 				clearTimeout(this.schedule[name].timeoutID);
 				delete this.schedule[name];
